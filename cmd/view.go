@@ -1,13 +1,10 @@
 package main
 
 import (
-	"os"
-	"read-aloud/internal/view"
+	"read-aloud/internal/view/biz"
 )
 
 func main() {
-	view := view.CreateView()
-	if err := view.Start(); err != nil {
-		os.Exit(1)
-	}
+	app := biz.FirstCreate()
+	app.Start()
 }
