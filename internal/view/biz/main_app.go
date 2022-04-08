@@ -3,7 +3,7 @@ package biz
 import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/widget"
+	"read-aloud/internal/theme"
 	"read-aloud/internal/view"
 )
 
@@ -13,8 +13,21 @@ type readAloudApp struct {
 	otherWindow []fyne.Window
 }
 
+func FirstCreate() view.ReadAloud {
+	//创建程序主体
+	fyneApp := app.New()
+	fyneApp.Settings().SetTheme(&theme.MyTheme{})//配置字体
+	mainWindow := CreateMainWindow(fyneApp)
+	readAloudApp := &readAloudApp{
+		fyneApp,
+		mainWindow,
+		[]fyne.Window{},
+	}
+	return readAloudApp
+}
+
+
 func (a *readAloudApp) Start() {
-	a.mainWindow.SetContent(widget.NewLabel("Hello World!"))
 	a.mainWindow.Show()
 	for _, ow := range a.otherWindow {
 		ow.Show()
@@ -36,16 +49,4 @@ func (a *readAloudApp) OpenNewWindow(title string) fyne.Window {
 	window.Show()
 	a.otherWindow = append(a.otherWindow, window)
 	return window
-}
-
-func FirstCreate() view.ReadAloud {
-	//创建程序主体
-	fyneApp := app.New()
-	mainWindow := CreateMainWindow(fyneApp)
-	readAloudApp := &readAloudApp{
-		fyneApp,
-		mainWindow,
-		[]fyne.Window{},
-	}
-	return readAloudApp
 }
